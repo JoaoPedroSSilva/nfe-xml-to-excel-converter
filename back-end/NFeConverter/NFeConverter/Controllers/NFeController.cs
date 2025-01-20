@@ -8,7 +8,7 @@ namespace NFeConverter.Controllers {
     [Route("api/[controller]")]
     public class NFeController : Controller {
         [HttpPost("convert")]
-        public IActionResult ConvertXmlToExcel([FromForm] IFormFile file) {
+        public IActionResult ConvertXmlToExcel(IFormFile file) {
             if (file == null || file.Length == 0) {
                 return BadRequest("Arquivo inválido.");
             }
