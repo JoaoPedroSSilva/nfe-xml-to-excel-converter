@@ -1,0 +1,6 @@
+@NFeConverter_HostAddress = http://localhost:5148
+
+GET {{NFeConverter_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
