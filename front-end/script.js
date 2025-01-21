@@ -13,7 +13,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
     formData.append('file', file);
 
     try {
-        const response = await fetch('http://localgost:5000/convert', {
+        const response = await fetch('http://localhost:5148/convert', {
             method: 'POST',
             body: formData,
         });
