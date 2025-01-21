@@ -9,9 +9,10 @@ namespace NFeConverter {
             builder.Services.AddCors(options => {
                 options.AddPolicy("AllowLocalhost",
                     policy => {
-                        policy.WithOrigins("http://127.0.0.1:5500")
+                        policy.WithOrigins("http://127.0.0.1:5500", "https://127.0.0.1:5500")
                         .AllowAnyMethod()
-                        .AllowAnyHeader();
+                        .AllowAnyHeader()
+                        .AllowCredentials();
 
                     });
             });
@@ -23,7 +24,7 @@ namespace NFeConverter {
 
             var app = builder.Build();
 
-            app.UseCors("AllowLocalHost");
+            app.UseCors("AllowLocalhost");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment()) {
