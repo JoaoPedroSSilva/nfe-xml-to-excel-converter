@@ -10,8 +10,10 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
         return;
     }
 
+    size = file.size / 1024 / 1024;
+    filesize =  size.toFixed(2);
     console.log("O arquivo tem:");
-    console.log(`${file.size / 1024 / 1024} MB.`);
+    console.log(`${filesize} MB.`);
 
     var sizeLimit = 4 * 1024 * 1024;
     if(file.size > sizeLimit) {
