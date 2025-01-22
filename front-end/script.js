@@ -26,7 +26,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
 async function uploadFile(file) {
     const formData = new FormData();
     formData.append('file', file);
-
+    document.getElementById('status').textContent = 'Enviando arquivo, por favor aguarde...';
     const progressContainer = document.getElementById('progress-container');
     const progressBar = document.getElementById('progress-bar');
     progressContainer.style.display = 'block';
