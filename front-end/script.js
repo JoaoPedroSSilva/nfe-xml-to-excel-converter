@@ -1,14 +1,23 @@
 document.getElementById('uploadForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    console.log("Testando")
     const fileInput = document.getElementById('xmlFile');
     const file = fileInput.files[0];
 
-    if (!file) {
-        alert('Favor, escolher um arquivo NF-e XML válido!');
+    if (!file || !file.name.toLowerCase().endsWith(".xml")) {
+        window.alert('Favor, escolher um arquivo NF-e XML válido!');
         return;
     }
 
+    console.log("O arquivo tem:");
+    console.log(`${file.size / 1024 / 1024} MB.`);
+
+    var sizeLimit = 4 * 1024 * 1024;
+    if(file.size > sizeLimit) {
+        window.alert('Tamanho do arquivo excede o limite de 4MB!');
+        return;
+    }
     const formData = new FormData();
     formData.append('file', file);
 
