@@ -12,12 +12,15 @@
         <h1>Conversor XML NF-e para Excel</h1>
         <form id="uploadForm" class="mt-4">
             <div class="mb-3">
-                <label for="xmlFile">Escolha um arquivo XML:</label>
-                <input type="file" name="file" id="xmlFile" accept=".xml" required>
+                <label for="xmlFile" class="form-label">Escolha um arquivo XML:</label>
+                <input type="file" class="form-control" name="file" id="xmlFile" accept=".xml" required>
             </div>
             <button type="submit" class="btn btn-primary">Converter</button>
         </form>
         <p id="status" class="mt-3"></p>
+        <div id="progress-container" class="progress mt-3" style="display: none;">
+            <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;"></div>
+        </div>
     
     </div>
     
