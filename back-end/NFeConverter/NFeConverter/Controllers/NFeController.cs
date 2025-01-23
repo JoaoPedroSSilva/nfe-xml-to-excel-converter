@@ -53,25 +53,43 @@ namespace NFeConverter.Controllers {
         private void PopulateDataTable(XmlDocument doc, DataTable dataTable) {
 
             var row = dataTable.NewRow();
-            row["Chave"] = doc.GetElementsByTagName("infNFe")[0]?.Attributes["Id"]?.Value.Replace("NFe", "");
-            row["Valor Total"] = doc.GetElementsByTagName("vNF")[0]?.InnerText;
+
+            var dateEmi = doc.GetElementsByTagName("dhEmi")[0]?.InnerText;
+            if (!string.IsNullOrEmpty(dateEmi)) {
+                var shortDate = dateEmi.Substring(0, dateEmi.IndexOf('T'));
+
+                if (DateTime.TryParse(shortDate, out var formatDate)) {
+                    row["Data Emissão"] = formatDate.ToString("dd/MM/yyyy");
+                } else {
+                    row["Data Emissão"] = "Data inválida";
+                }
+            } else {
+                row["Data Emissão"] = "Data inválida";
+            }
+
+            row["Nota"] = doc.GetElementsByTagName("nNF")[0]?.InnerText;
+            row["Valor Total"] = doc.GetElementsByTagName("vNF")[0]?.InnerText.Replace(".", ",");
             row["Emitente"] = doc.GetElementsByTagName("xNome")[0]?.InnerText;
+            row["CNPJ Emitente"] = doc.GetElementsByTagName("CNPJ")[0]?.InnerText;
             row["Destinatário"] = doc.GetElementsByTagName("xNome")[1]?.InnerText;
-            row["Produto"] = doc.GetElementsByTagName("xProd")[0]?.InnerText;
-            row["Quantidade"] = doc.GetElementsByTagName("qCom")[0]?.InnerText;
+            row["CNPJ Destinatário"] = doc.GetElementsByTagName("CNPJ")[1]?.InnerText;
+            row["Natureza Operação"] = doc.GetElementsByTagName("natOp")[0]?.InnerText;
+            row["Chave"] = doc.GetElementsByTagName("infNFe")[0]?.Attributes["Id"]?.Value.Replace("NFe", "");
 
             dataTable.Rows.Add(row);
-
         }
 
         private DataTable CreateDataTable() {
             var dataTable = new DataTable();
-            dataTable.Columns.Add("Chave");
+            dataTable.Columns.Add("Data Emissão");
+            dataTable.Columns.Add("Nota");
             dataTable.Columns.Add("Valor Total");
             dataTable.Columns.Add("Emitente");
+            dataTable.Columns.Add("CNPJ Emitente");
             dataTable.Columns.Add("Destinatário");
-            dataTable.Columns.Add("Produto");
-            dataTable.Columns.Add("Quantidade");
+            dataTable.Columns.Add("CNPJ Destinatário");
+            dataTable.Columns.Add("Natureza Operação");
+            dataTable.Columns.Add("Chave");
             return dataTable;
         }
 
