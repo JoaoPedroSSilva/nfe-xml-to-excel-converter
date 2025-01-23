@@ -2,30 +2,22 @@ document.getElementById('uploadForm').addEventListener('submit', async (event) =
     event.preventDefault();
 
     const fileInput = document.getElementById('xmlFile');
-    const file = fileInput.files[0];
+    const files = fileInput.files;
 
-    if (!file || !file.name.toLowerCase().endsWith(".xml")) {
-        window.alert('Favor, escolher um arquivo NF-e XML válido!');
+    if (files.length === 0) {
+        alert('Por favor, selecione pelo menos um arquivo XML.');
         return;
     }
 
-    size = file.size / 1024 / 1024;
-    filesize =  size.toFixed(2);
-    console.log("O arquivo tem:");
-    console.log(`${filesize} MB.`);
-
-    var sizeLimit = 4 * 1024 * 1024;
-    if(file.size > sizeLimit) {
-        window.alert('Tamanho do arquivo excede o limite de 4MB!');
-        return;
-    }
-
-    uploadFile(file);
+    uploadFile(files);
 });
 
-async function uploadFile(file) {
+async function uploadFile(files) {
     const formData = new FormData();
-    formData.append('file', file);
+    for (const file of files) {
+        formData.append('files', file);
+    }
+    
     document.getElementById('status').textContent = 'Enviando arquivo, por favor aguarde...';
     const progressContainer = document.getElementById('progress-container');
     const progressBar = document.getElementById('progress-bar');

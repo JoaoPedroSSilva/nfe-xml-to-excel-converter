@@ -8,18 +8,30 @@ namespace NFeConverter.Controllers {
     [Route("api/[controller]")]
     public class NFeController : Controller {
         [HttpPost("convert")]
-        public IActionResult ConvertXmlToExcel(IFormFile file) {
-            if (!ValidateXmlFile(file, out var validationMessage)) {
-                return BadRequest(validationMessage);
+        public IActionResult ConvertXmlToExcel([FromForm] List<IFormFile> files) {
+            if (files == null || files.Count == 0) {
+                return BadRequest("Nenhum arquivo enviado.");
+            }
+
+            var dataTable = CreateDataTable();
+
+            foreach (var file in files) {
+                if (!ValidateXmlFile(file, out var validationMessage)) {
+                    return BadRequest(validationMessage);
+                }
+
+                try {
+                    var doc = LoadXmlDocument(file);
+                    PopulateDataTable(doc, dataTable);
+                } catch (Exception ex) {
+                    return StatusCode(500, $"Erro ao processar o arquivo '{file.FileName}': {ex.Message}");
+                }
             }
 
             try {
-                var doc = LoadXmlDocument(file);
-                var dataTable = CreateDataTable();
-                PopulateDataTable(doc, dataTable);
                 return GenerateExcelFile(dataTable);
             } catch (Exception ex) {
-                return StatusCode(500, $"Erro interno: {ex.Message}");
+                return StatusCode(500, $"Erro ao gerar o arquivo Excel: {ex.Message}");
             }
         }
 
