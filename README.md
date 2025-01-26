@@ -1,21 +1,42 @@
 # nfe-xml-to-excel-converter
-Ferramenta para converter arquivos xml de NF-E Nota Fiscal Eletrônica para Excel.
+Ferramenta para converter arquivos XML de NF-e (Nota Fiscal Eletrônica) para uma planilha Excel consolidada.
 
 ## Recursos
-- Carregue arquivos XML NF-E.
-- Converta dados XML em planilhas Excem formatadas.
-- Baixe o arquivo convertido instantaneamente.
+- Upload de um ou múltiplos arquivos XML de NF-e.
+- Conversão automática dos dados relevantes em uma planilha Excel formatada.
+- Download instantâneo da planilha gerada.
 
 ## Tech Stack
--**Front-End**: HTML, CSS, JavaScript.
--**Back-End**: Python (Flask).
+- **Front-End**: HTML, CSS, JavaScript, Bootstrap.
+- **Back-End**: C# (.NET 6+), ClosedXML.
 
-## Como executasr
-### Front-end
-1. Abra `front-end/index.html` em um navegador
+## Como executar
+
+### Pré-requisitos
+- Instale o [SDK do .NET](https://dotnet.microsoft.com/download).
+- (Opcional) Instale um servidor local para o front-end, como o [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer).
 
 ### Back-End
-1. Navegue até `back-end/`.
-2. Instale dependências:
-3. '''bash
-4. pip instal flask pandas
+1. Navegue até a pasta do projeto:
+    ```bash
+    cd back-end
+    ```
+2. Compile e execute:
+    ```bash
+    dotnet run
+    ```
+3. O servidor estará disponível em `https://localhost:7075`.
+
+### Front-End
+1. Navegue até a pasta do front-end.
+2. Abra `index.html` diretamente em um navegador ou use um servidor local como o Live Server.
+
+### Testes
+- Carregue um ou mais arquivos XML de NF-e pelo front-end.
+- Certifique-se de que o download da planilha Excel ocorre corretamente.
+- Valide os dados na planilha gerada.
+
+## Planejamentos Futuros
+- Implementar suporte para diferentes layouts de XML.
+- Melhorar o design do front-end.
+- Criar documentação completa da API.
