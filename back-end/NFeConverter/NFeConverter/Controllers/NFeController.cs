@@ -16,8 +16,9 @@ namespace NFeConverter.Controllers {
             var dataTable = CreateDataTable();
 
             foreach (var file in files) {
-                if (!ValidateXmlFile(file, out var validationMessage)) {
-                    return BadRequest(validationMessage);
+                string validation = ValidateXmlFile(file);
+                if (validation != "") {
+                    return BadRequest(validation);
                 }
 
                 try {
@@ -93,19 +94,19 @@ namespace NFeConverter.Controllers {
             return dataTable;
         }
 
-        private bool ValidateXmlFile(IFormFile file, out string validationMessage) {
+        private string ValidateXmlFile(IFormFile file) {
+            string validationMessage = "";
             if (file == null || file.Length == 0) {
                 validationMessage = "Arquivo inválido.";
-                return false;
+                return validationMessage;
             }
 
             if (!file.FileName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)) {
                 validationMessage = "Formato de arquivo inválido. Envie um arquivo XML NF-e válido.";
-                return false;
+                return validationMessage;
             }
 
-            validationMessage = null;
-            return true;
+            return validationMessage;
         }
 
         private XmlDocument LoadXmlDocument(IFormFile file) {
